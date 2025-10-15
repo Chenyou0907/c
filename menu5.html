@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>選單5 - 設施評價</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            background: #f0f9ff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #dbeafe;
+        }
+
+        .back-btn {
+            background: #dbeafe;
+            color: #1e40af;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            background: #bfdbfe;
+        }
+
+        h1 {
+            color: #1e40af;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 0.95em;
+        }
+
+        .question-section {
+            background: #f8fafc;
+            border: 2px solid #dbeafe;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .question-title {
+            color: #1e40af;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #dbeafe;
+            padding-bottom: 10px;
+        }
+
+        .satisfaction-options {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border: 2px solid #dbeafe;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .radio-option:hover {
+            background: #eff6ff;
+            border-color: #3b82f6;
+        }
+
+        .radio-option input[type="radio"] {
+            width: 16px;
+            height: 16px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .radio-option label {
+            font-size: 1em;
+            font-weight: 500;
+            color: #1e40af;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .radio-option:has(input:checked) {
+            background: #eff6ff;
+            border-color: #2563eb;
+        }
+
+        .detail-answer {
+            margin-top: 15px;
+        }
+
+        .detail-answer label {
+            display: block;
+            font-weight: 600;
+            color: #1e40af;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .detail-answer textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 12px;
+            border: 2px solid #dbeafe;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.95em;
+            resize: vertical;
+            transition: border-color 0.2s ease;
+        }
+
+        .detail-answer textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .submit-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .submit-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .result {
+            background: #dcfce7;
+            border: 2px solid #16a34a;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn">← 返回主選單</a>
+        
+        <div class="header">
+            <h1>選單5 - 設施評價</h1>
+            <p class="subtitle">請評價我們的設施品質</p>
+        </div>
+
+        <form id="surveyForm">
+            <!-- 問題1 -->
+            <div class="question-section">
+                <h3 class="question-title">1. 設施整潔度如何？</h3>
+                <div class="satisfaction-options">
+                    <div class="radio-option">
+                        <input type="radio" id="q1_option5" name="question1" value="5">
+                        <label for="q1_option5">超級好</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="q1_option4" name="question1" value="4">
+                        <label for="q1_option4">超好</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="q1_option3" name="question1" value="3">
+                        <label for="q1_option3">很好</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="q1_option2" name="question1" value="2">
+                        <label for="q1_option2">爛</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="q1_option1" name="question1" value="1">
+                        <label for="q1_option1">超爛</label>
+                    </div>
+                </div>
+                <div class="detail-answer">
+                    <label for="q1_detail">詳細說明：</label>
+                    <textarea id="q1_detail" name="question1_detail" placeholder="請詳細說明您的想法..."></textarea>
+                </div>
+            </div>
+
+            <!-- 問題2 -->
+            <div class="question-section">
+                <h3 class="question-title">2. 設備功能性如何？</h3>
+                <div class="satisfaction-options">
+                    <div class="radio-option">
+                        <input type="radio" id="q2_option5" name="question2" value="5">
+                        <label for="q2_option5">超級好</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="q2_option4" name="question2" value="4">
+                        <label for="q2_option4">超好</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="q2_option3" name="question2" value="3">
+                        <label for="q2_option3">很好</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="q2_option2" name="question2" value="2">
+                        <label for="q2_option2">爛</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="q2_option1" name="question2" value="1">
+                        <label for="q2_option1">超爛</label>
+                    </div>
+                </div>
+                <div class="detail-answer">
+                    <label for="q2_detail">詳細說明：</label>
+                    <textarea id="q2_detail" name="question2_detail" placeholder="請詳細說明您的想法..."></textarea>
+                </div>
+            </div>
+
+            <!-- 問題3 -->
+            <div class="question-section">
+                <h3 class="question-title">3. 空間舒適度如何？</h3>
+                <div class="satisfaction-options">
+                    <div class="radio-option">
+                        <input type="radio" id="q3_option5" name="question3" value="5">
+                        <label for="q3_option5">超級好</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="q3_option4" name="question3" value="4">
+                        <label for="q3_option4">超好</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="q3_option3" name="question3" value="3">
+                        <label for="q3_option3">很好</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="q3_option2" name="question3" value="2">
+                        <label for="q3_option2">爛</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="q3_option1" name="question3" value="1">
+                        <label for="q3_option1">超爛</label>
+                    </div>
+                </div>
+                <div class="detail-answer">
+                    <label for="q3_detail">詳細說明：</label>
+                    <textarea id="q3_detail" name="question3_detail" placeholder="請詳細說明您的想法..."></textarea>
+                </div>
+            </div>
+        </form>
+
+        <button class="submit-btn" id="submitBtn" disabled>提交評價</button>
+
+        <div class="result" id="result">
+            <h3>感謝您的評價！</h3>
+            <p id="resultText"></p>
+        </div>
+    </div>
+
+    <script>
+        // 頁面載入時檢查是否已提交
+        window.addEventListener('load', function() {
+            if (localStorage.getItem('menu5_submitted') === 'true') {
+                // 禁用所有輸入
+                document.querySelectorAll('input, textarea').forEach(element => {
+                    element.disabled = true;
+                });
+                document.getElementById('submitBtn').disabled = true;
+                document.getElementById('submitBtn').textContent = '已提交';
+                
+                // 顯示已提交訊息
+                document.getElementById('resultText').innerHTML = 
+                    '<div style="text-align: center; color: #666;"><strong>您已經提交過評價了！</strong><br><br><a href="index.html" style="color: #2563eb;">返回主選單</a></div>';
+                document.getElementById('result').classList.add('show');
+            }
+        });
+
+        // 處理單選按鈕變化
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                checkFormCompletion();
+            });
+        });
+
+        // 檢查表單完成度
+        function checkFormCompletion() {
+            const questions = ['question1', 'question2', 'question3'];
+            let allAnswered = true;
+            
+            questions.forEach(questionName => {
+                const selectedRadio = document.querySelector(`input[name="${questionName}"]:checked`);
+                if (!selectedRadio) {
+                    allAnswered = false;
+                }
+            });
+            
+            document.getElementById('submitBtn').disabled = !allAnswered;
+        }
+
+        // 處理提交
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            // 檢查是否已經提交過
+            if (localStorage.getItem('menu5_submitted') === 'true') {
+                alert('您已經提交過評價了！');
+                return;
+            }
+
+            const questions = ['question1', 'question2', 'question3'];
+            const questionTitles = {
+                'question1': '設施整潔度',
+                'question2': '設備功能性',
+                'question3': '空間舒適度'
+            };
+            const options = {
+                5: '超級好',
+                4: '超好', 
+                3: '很好',
+                2: '爛',
+                1: '超爛'
+            };
+            
+            let resultText = '<div style="text-align: left;">';
+            let totalScore = 0;
+            let questionCount = 0;
+            
+            questions.forEach(questionName => {
+                const selectedRadio = document.querySelector(`input[name="${questionName}"]:checked`);
+                const detailText = document.querySelector(`textarea[name="${questionName}_detail"]`).value;
+                
+                if (selectedRadio) {
+                    const score = parseInt(selectedRadio.value);
+                    totalScore += score;
+                    questionCount++;
+                    
+                    resultText += `<div style="margin-bottom: 15px; padding: 10px; background: #eff6ff; border-radius: 6px;">`;
+                    resultText += `<strong>${questionTitles[questionName]}：</strong>${options[score]} (${score}/5)<br>`;
+                    if (detailText.trim()) {
+                        resultText += `<small style="color: #666;">詳細說明：${detailText}</small>`;
+                    }
+                    resultText += `</div>`;
+                }
+            });
+            
+            const averageScore = (totalScore / questionCount).toFixed(1);
+            resultText += `<div style="margin-top: 15px; padding: 15px; background: #dcfce7; border-radius: 6px; text-align: center;">`;
+            resultText += `<strong>平均評分：${averageScore}/5.0</strong><br><br>`;
+            resultText += `<span style="color: #666;">3秒後自動返回主選單...</span>`;
+            resultText += `</div>`;
+            resultText += '</div>';
+            
+            document.getElementById('resultText').innerHTML = resultText;
+            document.getElementById('result').classList.add('show');
+            
+            // 標記為已提交
+            localStorage.setItem('menu5_submitted', 'true');
+            
+            // 禁用所有輸入
+            document.querySelectorAll('input, textarea').forEach(element => {
+                element.disabled = true;
+            });
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('submitBtn').textContent = '已提交';
+            
+            // 滾動到結果
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+            
+            // 3秒後跳轉回主選單
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
