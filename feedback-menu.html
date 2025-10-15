@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>意見回饋選單</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            background: #faf7ff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ede9fe;
+        }
+
+        .back-btn {
+            background: #ede9fe;
+            color: #6b21a8;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            background: #ddd6fe;
+        }
+
+        h1 {
+            color: #6b21a8;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #a3a3a3;
+            font-size: 0.95em;
+        }
+
+        .menu-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .menu-item {
+            background: #faf5ff;
+            border: 2px solid #ddd6fe;
+            border-radius: 8px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: #6b21a8;
+        }
+
+        .menu-item:hover {
+            background: #ede9fe;
+            border-color: #a855f7;
+        }
+
+        .item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 1.05em;
+        }
+
+        .item-desc {
+            font-size: 0.85em;
+            color: #a3a3a3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn">← 返回主選單</a>
+        
+        <div class="header">
+            <h1>意見回饋選單</h1>
+            <p class="subtitle">請選擇回饋類型</p>
+        </div>
+
+        <div class="menu-list">
+            <a href="#" class="menu-item" onclick="handleMenuClick('建議改進')">
+                <div class="item-title">建議改進</div>
+                <div class="item-desc">提供改進建議和想法</div>
+            </a>
+
+            <a href="#" class="menu-item" onclick="handleMenuClick('投訴抱怨')">
+                <div class="item-title">投訴抱怨</div>
+                <div class="item-desc">反映問題和不滿意之處</div>
+            </a>
+
+            <a href="#" class="menu-item" onclick="handleMenuClick('讚美肯定')">
+                <div class="item-title">讚美肯定</div>
+                <div class="item-desc">分享滿意的服務體驗</div>
+            </a>
+
+            <a href="#" class="menu-item" onclick="handleMenuClick('疑問諮詢')">
+                <div class="item-title">疑問諮詢</div>
+                <div class="item-desc">詢問相關問題</div>
+            </a>
+
+            <a href="#" class="menu-item" onclick="handleMenuClick('聯絡資訊')">
+                <div class="item-title">聯絡資訊</div>
+                <div class="item-desc">留下聯絡方式以便回覆</div>
+            </a>
+
+            <a href="#" class="menu-item" onclick="handleMenuClick('回饋記錄')">
+                <div class="item-title">回饋記錄</div>
+                <div class="item-desc">查看之前的回饋記錄</div>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function handleMenuClick(itemName) {
+            alert(`您選擇了：${itemName}\n\n這裡可以連接到具體的回饋功能或表單頁面。`);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>評分選單</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            background: #fefcf8;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #fef3cd;
+        }
+
+        .back-btn {
+            background: #fef3cd;
+            color: #92400e;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            background: #fde68a;
+        }
+
+        h1 {
+            color: #92400e;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #a3a3a3;
+            font-size: 0.95em;
+        }
+
+        .menu-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .menu-item {
+            background: #fffbeb;
+            border: 2px solid #fde68a;
+            border-radius: 8px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: #92400e;
+        }
+
+        .menu-item:hover {
+            background: #fef3cd;
+            border-color: #f59e0b;
+        }
+
+        .item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 1.05em;
+        }
+
+        .item-desc {
+            font-size: 0.85em;
+            color: #a3a3a3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn">← 返回主選單</a>
+        
+        <div class="header">
+            <h1>評分選單</h1>
+            <p class="subtitle">請選擇要評分的項目</p>
+        </div>
+
+        <div class="menu-list">
+            <a href="#" class="menu-item" onclick="handleMenuClick('餐點品質打分')">
+                <div class="item-title">餐點品質打分</div>
+                <div class="item-desc">對餐點味道、份量等進行評分</div>
+            </a>
+
+            <a href="#" class="menu-item" onclick="handleMenuClick('環境氛圍打分')">
+                <div class="item-title">環境氛圍打分</div>
+                <div class="item-desc">對用餐環境舒適度評分</div>
+            </a>
+
+            <a href="#" class="menu-item" onclick="handleMenuClick('價格合理性打分')">
+                <div class="item-title">價格合理性打分</div>
+                <div class="item-desc">評價價格與品質的匹配度</div>
+            </a>
+
+            <a href="#" class="menu-item" onclick="handleMenuClick('服務效率打分')">
+                <div class="item-title">服務效率打分</div>
+                <div class="item-desc">對服務流程效率評分</div>
+            </a>
+
+            <a href="#" class="menu-item" onclick="handleMenuClick('綜合評分')">
+                <div class="item-title">綜合評分</div>
+                <div class="item-desc">整體體驗的綜合評價</div>
+            </a>
+
+            <a href="#" class="menu-item" onclick="handleMenuClick('評分詳情')">
+                <div class="item-title">評分詳情</div>
+                <div class="item-desc">查看詳細評分記錄</div>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function handleMenuClick(itemName) {
+            alert(`您選擇了：${itemName}\n\n這裡可以連接到具體的評分功能或詳情頁面。`);
+        }
+    </script>
+</body>
+</html>

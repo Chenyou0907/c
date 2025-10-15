@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打分與詳情 - 選單系統</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.2em;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        .scoring-section {
+            display: grid;
+            gap: 30px;
+        }
+
+        .category-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #FF9800;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .category-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .star {
+            font-size: 2em;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #FFD700;
+            transform: scale(1.1);
+        }
+
+        .rating-text {
+            margin-left: 15px;
+            font-weight: 600;
+            color: #666;
+            min-width: 80px;
+        }
+
+        .detail-input {
+            width: 100%;
+            min-height: 80px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1em;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .detail-input:focus {
+            outline: none;
+            border-color: #FF9800;
+        }
+
+        .overall-section {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .overall-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .overall-rating {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .overall-star {
+            font-size: 3em;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .overall-star:hover,
+        .overall-star.active {
+            color: #FFD700;
+            transform: scale(1.2);
+        }
+
+        .summary-display {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px solid #FF9800;
+            display: none;
+        }
+
+        .summary-display.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(33, 150, 243, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #f44336, #d32f2f);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(244, 67, 54, 0.3);
+        }
+
+        .score-indicator {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            color: white;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .score-excellent { background: #4CAF50; }
+        .score-good { background: #8BC34A; }
+        .score-average { background: #FF9800; }
+        .score-poor { background: #FF5722; }
+        .score-terrible { background: #f44336; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">
+        ← 返回主選單
+    </a>
+
+    <div class="container">
+        <div class="header">
+            <h1>⭐ 打分與詳情</h1>
+            <p class="subtitle">請對各項服務進行詳細評分，並提供具體的意見回饋</p>
+        </div>
+
+        <div class="scoring-section">
+            <div class="category-card">
+                <div class="category-title">
+                    🍽️ 餐點品質
+                </div>
+                <div class="star-rating">
+                    <span class="star" data-category="food" data-value="1">★</span>
+                    <span class="star" data-category="food" data-value="2">★</span>
+                    <span class="star" data-category="food" data-value="3">★</span>
+                    <span class="star" data-category="food" data-value="4">★</span>
+                    <span class="star" data-category="food" data-value="5">★</span>
+                    <span class="rating-text" id="food-text">未評分</span>
+                </div>
+                <textarea class="detail-input" data-category="food" placeholder="請詳細描述餐點的味道、份量、擺盤等方面的感受..."></textarea>
+            </div>
+
+            <div class="category-card">
+                <div class="category-title">
+                    🏪 環境氛圍
+                </div>
+                <div class="star-rating">
+                    <span class="star" data-category="environment" data-value="1">★</span>
+                    <span class="star" data-category="environment" data-value="2">★</span>
+                    <span class="star" data-category="environment" data-value="3">★</span>
+                    <span class="star" data-category="environment" data-value="4">★</span>
+                    <span class="star" data-category="environment" data-value="5">★</span>
+                    <span class="rating-text" id="environment-text">未評分</span>
+                </div>
+                <textarea class="detail-input" data-category="environment" placeholder="請描述用餐環境的舒適度、清潔度、音樂、裝潢等..."></textarea>
+            </div>
+
+            <div class="category-card">
+                <div class="category-title">
+                    💰 價格合理性
+                </div>
+                <div class="star-rating">
+                    <span class="star" data-category="price" data-value="1">★</span>
+                    <span class="star" data-category="price" data-value="2">★</span>
+                    <span class="star" data-category="price" data-value="3">★</span>
+                    <span class="star" data-category="price" data-value="4">★</span>
+                    <span class="star" data-category="price" data-value="5">★</span>
+                    <span class="rating-text" id="price-text">未評分</span>
+                </div>
+                <textarea class="detail-input" data-category="price" placeholder="請評價價格與餐點品質、份量的匹配程度..."></textarea>
+            </div>
+
+            <div class="category-card">
+                <div class="category-title">
+                    ⚡ 服務效率
+                </div>
+                <div class="star-rating">
+                    <span class="star" data-category="efficiency" data-value="1">★</span>
+                    <span class="star" data-category="efficiency" data-value="2">★</span>
+                    <span class="star" data-category="efficiency" data-value="3">★</span>
+                    <span class="star" data-category="efficiency" data-value="4">★</span>
+                    <span class="star" data-category="efficiency" data-value="5">★</span>
+                    <span class="rating-text" id="efficiency-text">未評分</span>
+                </div>
+                <textarea class="detail-input" data-category="efficiency" placeholder="請描述點餐、出餐、結帳等流程的效率..."></textarea>
+            </div>
+        </div>
+
+        <div class="overall-section">
+            <div class="overall-title">🏆 整體評價</div>
+            <div class="overall-rating">
+                <span class="overall-star" data-value="1">★</span>
+                <span class="overall-star" data-value="2">★</span>
+                <span class="overall-star" data-value="3">★</span>
+                <span class="overall-star" data-value="4">★</span>
+                <span class="overall-star" data-value="5">★</span>
+            </div>
+            <div id="overall-text" style="font-size: 1.2em; font-weight: 600; color: #666;">請點擊星星進行整體評分</div>
+        </div>
+
+        <div class="summary-display" id="summaryDisplay">
+            <h3>📊 評分總結</h3>
+            <div id="summaryContent"></div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="generateSummary()">生成評分總結</button>
+            <button class="btn btn-secondary" onclick="saveRating()">保存評分</button>
+            <button class="btn btn-danger" onclick="resetAll()">重新評分</button>
+        </div>
+    </div>
+
+    <script>
+        const ratings = {};
+        const details = {};
+        let overallRating = 0;
+
+        const ratingTexts = {
+            1: '很差',
+            2: '不佳', 
+            3: '普通',
+            4: '良好',
+            5: '優秀'
+        };
+
+        // 處理分類評分
+        document.querySelectorAll('.star').forEach(star => {
+            star.addEventListener('click', function() {
+                const category = this.dataset.category;
+                const value = parseInt(this.dataset.value);
+                
+                ratings[category] = value;
+                
+                // 更新星星顯示
+                const categoryStars = document.querySelectorAll(`[data-category="${category}"]`);
+                categoryStars.forEach((s, index) => {
+                    if (index < value) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+                
+                // 更新評分文字
+                document.getElementById(`${category}-text`).textContent = ratingTexts[value];
+                
+                // 自動計算整體評分
+                updateOverallRating();
+            });
+        });
+
+        // 處理整體評分
+        document.querySelectorAll('.overall-star').forEach(star => {
+            star.addEventListener('click', function() {
+                overallRating = parseInt(this.dataset.value);
+                
+                // 更新星星顯示
+                document.querySelectorAll('.overall-star').forEach((s, index) => {
+                    if (index < overallRating) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+                
+                // 更新文字
+                document.getElementById('overall-text').textContent = `整體評分：${overallRating} 星 (${ratingTexts[overallRating]})`;
+            });
+        });
+
+        // 處理詳細意見輸入
+        document.querySelectorAll('.detail-input').forEach(input => {
+            input.addEventListener('input', function() {
+                const category = this.dataset.category;
+                details[category] = this.value;
+            });
+        });
+
+        function updateOverallRating() {
+            const ratingValues = Object.values(ratings);
+            if (ratingValues.length > 0) {
+                const average = ratingValues.reduce((sum, val) => sum + val, 0) / ratingValues.length;
+                const roundedAverage = Math.round(average);
+                
+                // 自動設置整體評分
+                overallRating = roundedAverage;
+                
+                // 更新整體評分顯示
+                document.querySelectorAll('.overall-star').forEach((s, index) => {
+                    if (index < roundedAverage) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+                
+                document.getElementById('overall-text').textContent = `整體評分：${roundedAverage} 星 (${ratingTexts[roundedAverage]}) - 自動計算`;
+            }
+        }
+
+        function getScoreClass(score) {
+            if (score >= 4.5) return 'score-excellent';
+            if (score >= 3.5) return 'score-good';
+            if (score >= 2.5) return 'score-average';
+            if (score >= 1.5) return 'score-poor';
+            return 'score-terrible';
+        }
+
+        function generateSummary() {
+            if (Object.keys(ratings).length === 0) {
+                alert('請至少對一個項目進行評分！');
+                return;
+            }
+
+            const categories = {
+                food: '餐點品質',
+                environment: '環境氛圍',
+                price: '價格合理性',
+                efficiency: '服務效率'
+            };
+
+            let summaryHtml = '<div style="text-align: left; margin: 20px 0;">';
+            
+            // 各項評分
+            Object.entries(ratings).forEach(([key, value]) => {
+                const hasDetail = details[key] && details[key].trim();
+                summaryHtml += `
+                    <div style="margin-bottom: 15px; padding: 15px; background: #f5f5f5; border-radius: 8px;">
+                        <strong>${categories[key]}：</strong>
+                        <span class="score-indicator ${getScoreClass(value)}">${value} 星</span>
+                        ${hasDetail ? `<br><small style="color: #666; margin-top: 5px; display: block;">${details[key]}</small>` : ''}
+                    </div>
+                `;
+            });
+            
+            // 計算平均分
+            const average = Object.values(ratings).reduce((sum, val) => sum + val, 0) / Object.keys(ratings).length;
+            
+            summaryHtml += `
+                <div style="margin-top: 20px; padding: 20px; background: linear-gradient(135deg, #e8f5e8, #c8e6c9); border-radius: 12px; text-align: center;">
+                    <h4>📈 評分統計</h4>
+                    <p><strong>平均評分：</strong><span class="score-indicator ${getScoreClass(average)}">${average.toFixed(1)} 星</span></p>
+                    <p><strong>整體評分：</strong><span class="score-indicator ${getScoreClass(overallRating)}">${overallRating} 星</span></p>
+                    <p style="margin-top: 10px; color: #666;">已評分項目：${Object.keys(ratings).length} / 4</p>
+                </div>
+            `;
+            
+            summaryHtml += '</div>';
+            
+            document.getElementById('summaryContent').innerHTML = summaryHtml;
+            document.getElementById('summaryDisplay').classList.add('show');
+            
+            // 滾動到總結區域
+            document.getElementById('summaryDisplay').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function saveRating() {
+            if (Object.keys(ratings).length === 0) {
+                alert('請至少對一個項目進行評分！');
+                return;
+            }
+            
+            const ratingData = {
+                ratings: ratings,
+                details: details,
+                overall: overallRating,
+                timestamp: new Date().toLocaleString('zh-TW')
+            };
+            
+            // 模擬保存到本地存儲
+            localStorage.setItem('restaurantRating', JSON.stringify(ratingData));
+            
+            alert('✅ 評分已成功保存！\n\n感謝您的詳細評價，您的意見對我們非常重要。');
+        }
+
+        function resetAll() {
+            if (confirm('確定要重新評分嗎？這將清除所有已填寫的內容。')) {
+                // 重置所有數據
+                Object.keys(ratings).forEach(key => delete ratings[key]);
+                Object.keys(details).forEach(key => delete details[key]);
+                overallRating = 0;
+                
+                // 重置星星顯示
+                document.querySelectorAll('.star, .overall-star').forEach(star => {
+                    star.classList.remove('active');
+                });
+                
+                // 重置文字
+                document.querySelectorAll('.rating-text').forEach(text => {
+                    text.textContent = '未評分';
+                });
+                document.getElementById('overall-text').textContent = '請點擊星星進行整體評分';
+                
+                // 重置輸入框
+                document.querySelectorAll('.detail-input').forEach(input => {
+                    input.value = '';
+                });
+                
+                // 隱藏總結
+                document.getElementById('summaryDisplay').classList.remove('show');
+            }
+        }
+
+        // 頁面載入時嘗試恢復之前的評分
+        window.addEventListener('load', function() {
+            const savedRating = localStorage.getItem('restaurantRating');
+            if (savedRating) {
+                const data = JSON.parse(savedRating);
+                
+                // 恢復評分數據
+                Object.assign(ratings, data.ratings || {});
+                Object.assign(details, data.details || {});
+                overallRating = data.overall || 0;
+                
+                // 恢復顯示
+                Object.entries(ratings).forEach(([category, value]) => {
+                    const categoryStars = document.querySelectorAll(`[data-category="${category}"]`);
+                    categoryStars.forEach((s, index) => {
+                        if (index < value) {
+                            s.classList.add('active');
+                        }
+                    });
+                    document.getElementById(`${category}-text`).textContent = ratingTexts[value];
+                });
+                
+                Object.entries(details).forEach(([category, text]) => {
+                    const input = document.querySelector(`[data-category="${category}"]`);
+                    if (input) input.value = text;
+                });
+                
+                if (overallRating > 0) {
+                    document.querySelectorAll('.overall-star').forEach((s, index) => {
+                        if (index < overallRating) {
+                            s.classList.add('active');
+                        }
+                    });
+                    document.getElementById('overall-text').textContent = `整體評分：${overallRating} 星 (${ratingTexts[overallRating]})`;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

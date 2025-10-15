@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服務態度評價 - 選單系統</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.2em;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        .evaluation-form {
+            display: grid;
+            gap: 25px;
+        }
+
+        .question-group {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #2196F3;
+        }
+
+        .question-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .rating-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .rating-option {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .rating-option:hover {
+            border-color: #2196F3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.2);
+        }
+
+        .rating-option.selected {
+            background: #2196F3;
+            color: white;
+            border-color: #2196F3;
+        }
+
+        .rating-emoji {
+            font-size: 2em;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .rating-text {
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .comment-section {
+            margin-top: 20px;
+        }
+
+        .comment-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .comment-input {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1em;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        .comment-input:focus {
+            outline: none;
+            border-color: #2196F3;
+        }
+
+        .submit-section {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 15px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .reset-btn {
+            background: linear-gradient(45deg, #f44336, #d32f2f);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(244, 67, 54, 0.3);
+        }
+
+        .result-display {
+            background: #e8f5e8;
+            border: 2px solid #4CAF50;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .result-display.show {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">
+        ← 返回主選單
+    </a>
+
+    <div class="container">
+        <div class="header">
+            <h1>😊 服務態度評價</h1>
+            <p class="subtitle">請根據您的實際體驗，對我們的服務態度進行評價</p>
+        </div>
+
+        <form class="evaluation-form" id="evaluationForm">
+            <div class="question-group">
+                <div class="question-title">1. 服務人員的友善程度如何？</div>
+                <div class="rating-options">
+                    <div class="rating-option" data-question="friendliness" data-value="5">
+                        <span class="rating-emoji">😍</span>
+                        <div class="rating-text">非常友善</div>
+                    </div>
+                    <div class="rating-option" data-question="friendliness" data-value="4">
+                        <span class="rating-emoji">😊</span>
+                        <div class="rating-text">友善</div>
+                    </div>
+                    <div class="rating-option" data-question="friendliness" data-value="3">
+                        <span class="rating-emoji">😐</span>
+                        <div class="rating-text">普通</div>
+                    </div>
+                    <div class="rating-option" data-question="friendliness" data-value="2">
+                        <span class="rating-emoji">😕</span>
+                        <div class="rating-text">不太友善</div>
+                    </div>
+                    <div class="rating-option" data-question="friendliness" data-value="1">
+                        <span class="rating-emoji">😠</span>
+                        <div class="rating-text">很不友善</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <div class="question-title">2. 服務人員的專業程度如何？</div>
+                <div class="rating-options">
+                    <div class="rating-option" data-question="professionalism" data-value="5">
+                        <span class="rating-emoji">🌟</span>
+                        <div class="rating-text">非常專業</div>
+                    </div>
+                    <div class="rating-option" data-question="professionalism" data-value="4">
+                        <span class="rating-emoji">⭐</span>
+                        <div class="rating-text">專業</div>
+                    </div>
+                    <div class="rating-option" data-question="professionalism" data-value="3">
+                        <span class="rating-emoji">💫</span>
+                        <div class="rating-text">普通</div>
+                    </div>
+                    <div class="rating-option" data-question="professionalism" data-value="2">
+                        <span class="rating-emoji">⚡</span>
+                        <div class="rating-text">不太專業</div>
+                    </div>
+                    <div class="rating-option" data-question="professionalism" data-value="1">
+                        <span class="rating-emoji">❌</span>
+                        <div class="rating-text">很不專業</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <div class="question-title">3. 服務回應速度如何？</div>
+                <div class="rating-options">
+                    <div class="rating-option" data-question="responsiveness" data-value="5">
+                        <span class="rating-emoji">🚀</span>
+                        <div class="rating-text">非常快速</div>
+                    </div>
+                    <div class="rating-option" data-question="responsiveness" data-value="4">
+                        <span class="rating-emoji">⚡</span>
+                        <div class="rating-text">快速</div>
+                    </div>
+                    <div class="rating-option" data-question="responsiveness" data-value="3">
+                        <span class="rating-emoji">🚶</span>
+                        <div class="rating-text">普通</div>
+                    </div>
+                    <div class="rating-option" data-question="responsiveness" data-value="2">
+                        <span class="rating-emoji">🐌</span>
+                        <div class="rating-text">較慢</div>
+                    </div>
+                    <div class="rating-option" data-question="responsiveness" data-value="1">
+                        <span class="rating-emoji">🐢</span>
+                        <div class="rating-text">非常慢</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <div class="question-title">4. 整體服務滿意度</div>
+                <div class="rating-options">
+                    <div class="rating-option" data-question="overall" data-value="5">
+                        <span class="rating-emoji">🏆</span>
+                        <div class="rating-text">非常滿意</div>
+                    </div>
+                    <div class="rating-option" data-question="overall" data-value="4">
+                        <span class="rating-emoji">👍</span>
+                        <div class="rating-text">滿意</div>
+                    </div>
+                    <div class="rating-option" data-question="overall" data-value="3">
+                        <span class="rating-emoji">👌</span>
+                        <div class="rating-text">普通</div>
+                    </div>
+                    <div class="rating-option" data-question="overall" data-value="2">
+                        <span class="rating-emoji">👎</span>
+                        <div class="rating-text">不滿意</div>
+                    </div>
+                    <div class="rating-option" data-question="overall" data-value="1">
+                        <span class="rating-emoji">💔</span>
+                        <div class="rating-text">非常不滿意</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comment-section">
+                <label class="comment-label" for="additionalComments">額外意見或建議：</label>
+                <textarea 
+                    class="comment-input" 
+                    id="additionalComments" 
+                    placeholder="請分享您的具體體驗或建議，幫助我們提供更好的服務...">
+                </textarea>
+            </div>
+
+            <div class="submit-section">
+                <button type="submit" class="submit-btn">提交評價</button>
+                <button type="button" class="reset-btn" onclick="resetForm()">重新填寫</button>
+            </div>
+
+            <div class="result-display" id="resultDisplay">
+                <h3>📊 評價結果</h3>
+                <div id="resultContent"></div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const ratings = {};
+        
+        // 處理評分選項點擊
+        document.querySelectorAll('.rating-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const question = this.dataset.question;
+                const value = this.dataset.value;
+                
+                // 清除同組的選中狀態
+                document.querySelectorAll(`[data-question="${question}"]`).forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // 設置當前選項為選中
+                this.classList.add('selected');
+                ratings[question] = {
+                    value: parseInt(value),
+                    text: this.querySelector('.rating-text').textContent
+                };
+            });
+        });
+
+        // 處理表單提交
+        document.getElementById('evaluationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (Object.keys(ratings).length < 4) {
+                alert('請完成所有評價項目！');
+                return;
+            }
+            
+            const comments = document.getElementById('additionalComments').value;
+            const average = Object.values(ratings).reduce((sum, r) => sum + r.value, 0) / 4;
+            
+            let resultHtml = '<div style="margin: 15px 0;">';
+            resultHtml += `<p><strong>平均評分：${average.toFixed(1)} / 5.0</strong></p>`;
+            resultHtml += '<div style="margin-top: 15px;">';
+            
+            Object.entries(ratings).forEach(([key, rating]) => {
+                const questionNames = {
+                    friendliness: '友善程度',
+                    professionalism: '專業程度', 
+                    responsiveness: '回應速度',
+                    overall: '整體滿意度'
+                };
+                resultHtml += `<p>${questionNames[key]}：${rating.text} (${rating.value}/5)</p>`;
+            });
+            
+            if (comments.trim()) {
+                resultHtml += `<p style="margin-top: 10px;"><strong>額外意見：</strong><br>${comments}</p>`;
+            }
+            
+            resultHtml += '</div>';
+            resultHtml += '<p style="margin-top: 15px; color: #4CAF50; font-weight: 600;">✅ 感謝您的寶貴意見！</p>';
+            resultHtml += '</div>';
+            
+            document.getElementById('resultContent').innerHTML = resultHtml;
+            document.getElementById('resultDisplay').classList.add('show');
+            
+            // 滾動到結果區域
+            document.getElementById('resultDisplay').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        function resetForm() {
+            if (confirm('確定要重新填寫嗎？這將清除所有已填寫的內容。')) {
+                document.querySelectorAll('.rating-option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+                document.getElementById('additionalComments').value = '';
+                document.getElementById('resultDisplay').classList.remove('show');
+                Object.keys(ratings).forEach(key => delete ratings[key]);
+            }
+        }
+    </script>
+</body>
+</html>

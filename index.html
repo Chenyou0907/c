@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>選單系統</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2em;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-size: 1em;
+            line-height: 1.5;
+        }
+
+        .menu-grid {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .menu-button {
+            background: #ecf0f1;
+            color: #2c3e50;
+            padding: 20px;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: block;
+        }
+
+        .menu-button:hover {
+            background: #d5dbdb;
+            border-color: #95a5a6;
+            transform: translateY(-1px);
+        }
+
+        .menu-button.service {
+            border-color: #74b9ff;
+        }
+
+        .menu-button.service:hover {
+            background: #e8f4fd;
+            border-color: #0984e3;
+        }
+
+        .menu-button.scoring {
+            border-color: #fdcb6e;
+        }
+
+        .menu-button.scoring:hover {
+            background: #fef7e8;
+            border-color: #e17055;
+        }
+
+        .menu-button.feedback {
+            border-color: #a29bfe;
+        }
+
+        .menu-button.feedback:hover {
+            background: #f1f0fe;
+            border-color: #6c5ce7;
+        }
+
+        .button-text {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .button-desc {
+            font-size: 0.85em;
+            color: #7f8c8d;
+        }
+
+        .footer {
+            margin-top: 30px;
+            color: #95a5a6;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>選單系統</h1>
+        <p class="subtitle">
+            請選擇您需要的服務項目
+        </p>
+
+        <div class="menu-grid">
+            <a href="menu1.html" class="menu-button service">
+                <div class="button-text">選單1</div>
+                <div class="button-desc">滿意度評價</div>
+            </a>
+
+            <a href="menu2.html" class="menu-button scoring">
+                <div class="button-text">選單2</div>
+                <div class="button-desc">滿意度評價</div>
+            </a>
+
+            <a href="menu3.html" class="menu-button feedback">
+                <div class="button-text">選單3</div>
+                <div class="button-desc">滿意度評價</div>
+            </a>
+
+            <a href="menu4.html" class="menu-button service">
+                <div class="button-text">選單4</div>
+                <div class="button-desc">滿意度評價</div>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>選單系統 - 簡潔版本</p>
+        </div>
+    </div>
+</body>
+</html>

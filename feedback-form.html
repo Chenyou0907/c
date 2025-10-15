@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>意見回饋 - 選單系統</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.2em;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        .feedback-form {
+            display: grid;
+            gap: 25px;
+        }
+
+        .form-group {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #9C27B0;
+        }
+
+        .form-label {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #9C27B0;
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .feedback-type {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .type-option {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .type-option:hover {
+            border-color: #9C27B0;
+            transform: translateY(-2px);
+        }
+
+        .type-option.selected {
+            background: #9C27B0;
+            color: white;
+            border-color: #9C27B0;
+        }
+
+        .type-emoji {
+            font-size: 2em;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .type-text {
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .priority-selector {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .priority-option {
+            padding: 10px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .priority-option:hover {
+            border-color: #9C27B0;
+        }
+
+        .priority-option.selected {
+            background: #9C27B0;
+            color: white;
+            border-color: #9C27B0;
+        }
+
+        .priority-low { border-color: #4CAF50; }
+        .priority-low.selected { background: #4CAF50; }
+
+        .priority-medium { border-color: #FF9800; }
+        .priority-medium.selected { background: #FF9800; }
+
+        .priority-high { border-color: #f44336; }
+        .priority-high.selected { background: #f44336; }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .submit-section {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(33, 150, 243, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #f44336, #d32f2f);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(244, 67, 54, 0.3);
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border: 2px solid #4CAF50;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .char-counter {
+            text-align: right;
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .navigation-links {
+            background: #f0f0f0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .nav-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">
+        ← 返回主選單
+    </a>
+
+    <div class="container">
+        <div class="header">
+            <h1>📝 意見回饋</h1>
+            <p class="subtitle">您的寶貴意見是我們改進服務的動力，請詳細填寫以下資訊</p>
+        </div>
+
+        <form class="feedback-form" id="feedbackForm">
+            <div class="form-group">
+                <label class="form-label">回饋類型</label>
+                <div class="feedback-type">
+                    <div class="type-option" data-type="suggestion">
+                        <span class="type-emoji">💡</span>
+                        <div class="type-text">建議改進</div>
+                    </div>
+                    <div class="type-option" data-type="complaint">
+                        <span class="type-emoji">😞</span>
+                        <div class="type-text">投訴抱怨</div>
+                    </div>
+                    <div class="type-option" data-type="praise">
+                        <span class="type-emoji">👏</span>
+                        <div class="type-text">讚美肯定</div>
+                    </div>
+                    <div class="type-option" data-type="question">
+                        <span class="type-emoji">❓</span>
+                        <div class="type-text">疑問諮詢</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="feedbackTitle">回饋主題</label>
+                <input type="text" class="form-input" id="feedbackTitle" placeholder="請簡要描述您的回饋主題..." required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="feedbackContent">詳細內容</label>
+                <textarea class="form-input form-textarea" id="feedbackContent" placeholder="請詳細描述您的意見、建議或遇到的問題..." maxlength="1000" required></textarea>
+                <div class="char-counter">
+                    <span id="charCount">0</span> / 1000 字
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">優先級</label>
+                <div class="priority-selector">
+                    <div class="priority-option priority-low" data-priority="low">
+                        <span>🟢 低優先級</span>
+                    </div>
+                    <div class="priority-option priority-medium" data-priority="medium">
+                        <span>🟡 中優先級</span>
+                    </div>
+                    <div class="priority-option priority-high" data-priority="high">
+                        <span>🔴 高優先級</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">聯絡資訊（選填）</label>
+                <div class="contact-info">
+                    <input type="text" class="form-input" id="contactName" placeholder="您的姓名">
+                    <input type="email" class="form-input" id="contactEmail" placeholder="電子郵件">
+                    <input type="tel" class="form-input" id="contactPhone" placeholder="聯絡電話">
+                    <select class="form-input" id="preferredContact">
+                        <option value="">偏好聯絡方式</option>
+                        <option value="email">電子郵件</option>
+                        <option value="phone">電話</option>
+                        <option value="none">不需回覆</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="submit-section">
+                <button type="submit" class="btn btn-primary">提交回饋</button>
+                <button type="button" class="btn btn-secondary" onclick="saveDraft()">儲存草稿</button>
+                <button type="button" class="btn btn-danger" onclick="resetForm()">清除內容</button>
+            </div>
+
+            <div class="success-message" id="successMessage">
+                <h3>✅ 回饋提交成功！</h3>
+                <p>感謝您的寶貴意見，我們會仔細審閱並盡快回覆。</p>
+                <p><strong>回饋編號：</strong><span id="feedbackId"></span></p>
+            </div>
+        </form>
+
+        <div class="navigation-links">
+            <div class="nav-title">🧭 快速導航</div>
+            <div class="nav-buttons">
+                <a href="service-attitude.html" class="nav-btn">
+                    😊 服務態度評價
+                </a>
+                <a href="scoring-details.html" class="nav-btn">
+                    ⭐ 打分與詳情
+                </a>
+                <a href="index.html" class="nav-btn">
+                    🏠 返回主選單
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedType = '';
+        let selectedPriority = '';
+
+        // 處理回饋類型選擇
+        document.querySelectorAll('.type-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.type-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedType = this.dataset.type;
+            });
+        });
+
+        // 處理優先級選擇
+        document.querySelectorAll('.priority-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.priority-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedPriority = this.dataset.priority;
+            });
+        });
+
+        // 字數統計
+        document.getElementById('feedbackContent').addEventListener('input', function() {
+            const count = this.value.length;
+            document.getElementById('charCount').textContent = count;
+            
+            if (count > 900) {
+                document.getElementById('charCount').style.color = '#f44336';
+            } else if (count > 700) {
+                document.getElementById('charCount').style.color = '#FF9800';
+            } else {
+                document.getElementById('charCount').style.color = '#666';
+            }
+        });
+
+        // 表單提交
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!selectedType) {
+                alert('請選擇回饋類型！');
+                return;
+            }
+            
+            if (!selectedPriority) {
+                alert('請選擇優先級！');
+                return;
+            }
+            
+            const title = document.getElementById('feedbackTitle').value.trim();
+            const content = document.getElementById('feedbackContent').value.trim();
+            
+            if (!title || !content) {
+                alert('請填寫完整的回饋主題和內容！');
+                return;
+            }
+            
+            // 生成回饋編號
+            const feedbackId = 'FB' + Date.now().toString().slice(-8);
+            
+            // 收集所有資料
+            const feedbackData = {
+                id: feedbackId,
+                type: selectedType,
+                priority: selectedPriority,
+                title: title,
+                content: content,
+                contact: {
+                    name: document.getElementById('contactName').value,
+                    email: document.getElementById('contactEmail').value,
+                    phone: document.getElementById('contactPhone').value,
+                    preferred: document.getElementById('preferredContact').value
+                },
+                timestamp: new Date().toLocaleString('zh-TW'),
+                status: 'submitted'
+            };
+            
+            // 保存到本地存儲
+            const existingFeedback = JSON.parse(localStorage.getItem('feedbackList') || '[]');
+            existingFeedback.push(feedbackData);
+            localStorage.setItem('feedbackList', JSON.stringify(existingFeedback));
+            
+            // 顯示成功訊息
+            document.getElementById('feedbackId').textContent = feedbackId;
+            document.getElementById('successMessage').classList.add('show');
+            
+            // 滾動到成功訊息
+            document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+            
+            // 清除草稿
+            localStorage.removeItem('feedbackDraft');
+        });
+
+        function saveDraft() {
+            const draftData = {
+                type: selectedType,
+                priority: selectedPriority,
+                title: document.getElementById('feedbackTitle').value,
+                content: document.getElementById('feedbackContent').value,
+                contact: {
+                    name: document.getElementById('contactName').value,
+                    email: document.getElementById('contactEmail').value,
+                    phone: document.getElementById('contactPhone').value,
+                    preferred: document.getElementById('preferredContact').value
+                },
+                timestamp: new Date().toLocaleString('zh-TW')
+            };
+            
+            localStorage.setItem('feedbackDraft', JSON.stringify(draftData));
+            alert('✅ 草稿已儲存！您可以稍後繼續編輯。');
+        }
+
+        function resetForm() {
+            if (confirm('確定要清除所有內容嗎？未儲存的資料將會遺失。')) {
+                // 重置表單
+                document.getElementById('feedbackForm').reset();
+                
+                // 重置選擇狀態
+                document.querySelectorAll('.type-option, .priority-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                selectedType = '';
+                selectedPriority = '';
+                
+                // 重置字數統計
+                document.getElementById('charCount').textContent = '0';
+                document.getElementById('charCount').style.color = '#666';
+                
+                // 隱藏成功訊息
+                document.getElementById('successMessage').classList.remove('show');
+                
+                // 清除草稿
+                localStorage.removeItem('feedbackDraft');
+            }
+        }
+
+        // 頁面載入時恢復草稿
+        window.addEventListener('load', function() {
+            const draft = localStorage.getItem('feedbackDraft');
+            if (draft) {
+                const draftData = JSON.parse(draft);
+                
+                // 恢復表單內容
+                if (draftData.title) document.getElementById('feedbackTitle').value = draftData.title;
+                if (draftData.content) {
+                    document.getElementById('feedbackContent').value = draftData.content;
+                    document.getElementById('charCount').textContent = draftData.content.length;
+                }
+                
+                // 恢復聯絡資訊
+                if (draftData.contact) {
+                    if (draftData.contact.name) document.getElementById('contactName').value = draftData.contact.name;
+                    if (draftData.contact.email) document.getElementById('contactEmail').value = draftData.contact.email;
+                    if (draftData.contact.phone) document.getElementById('contactPhone').value = draftData.contact.phone;
+                    if (draftData.contact.preferred) document.getElementById('preferredContact').value = draftData.contact.preferred;
+                }
+                
+                // 恢復選擇狀態
+                if (draftData.type) {
+                    selectedType = draftData.type;
+                    document.querySelector(`[data-type="${draftData.type}"]`).classList.add('selected');
+                }
+                
+                if (draftData.priority) {
+                    selectedPriority = draftData.priority;
+                    document.querySelector(`[data-priority="${draftData.priority}"]`).classList.add('selected');
+                }
+                
+                if (confirm('發現未完成的草稿，是否要繼續編輯？')) {
+                    // 已經恢復了內容
+                } else {
+                    resetForm();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
