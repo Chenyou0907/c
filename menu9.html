@@ -194,34 +194,34 @@
         <a href="index.html" class="back-btn">← 返回主選單</a>
         
         <div class="header">
-            <h1>選單9 - 整體印象</h1>
-            <p class="subtitle">請評價您的整體體驗</p>
+            <h1>整體印象問卷</h1>
+            <p class="subtitle">請根據您的實際體驗，選擇最符合您想法的選項</p>
         </div>
 
         <form id="surveyForm">
             <!-- 問題1 -->
             <div class="question-section">
-                <h3 class="question-title">1. 整體服務印象如何？</h3>
+                <h3 class="question-title">1. 整體服務達到我的期望</h3>
                 <div class="satisfaction-options">
                     <div class="radio-option">
                         <input type="radio" id="q1_option5" name="question1" value="5">
-                        <label for="q1_option5">超級好</label>
+                        <label for="q1_option5">非常同意</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="q1_option4" name="question1" value="4">
-                        <label for="q1_option4">超好</label>
+                        <label for="q1_option4">同意</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="q1_option3" name="question1" value="3">
-                        <label for="q1_option3">很好</label>
+                        <label for="q1_option3">普通</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="q1_option2" name="question1" value="2">
-                        <label for="q1_option2">爛</label>
+                        <label for="q1_option2">不同意</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="q1_option1" name="question1" value="1">
-                        <label for="q1_option1">超爛</label>
+                        <label for="q1_option1">非常不同意</label>
                     </div>
                 </div>
                 <div class="detail-answer">
@@ -232,27 +232,27 @@
 
             <!-- 問題2 -->
             <div class="question-section">
-                <h3 class="question-title">2. 推薦意願如何？</h3>
+                <h3 class="question-title">2. 我願意推薦給他人使用</h3>
                 <div class="satisfaction-options">
                     <div class="radio-option">
                         <input type="radio" id="q2_option5" name="question2" value="5">
-                        <label for="q2_option5">超級好</label>
+                        <label for="q2_option5">非常同意</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="q2_option4" name="question2" value="4">
-                        <label for="q2_option4">超好</label>
+                        <label for="q2_option4">同意</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="q2_option3" name="question2" value="3">
-                        <label for="q2_option3">很好</label>
+                        <label for="q2_option3">普通</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="q2_option2" name="question2" value="2">
-                        <label for="q2_option2">爛</label>
+                        <label for="q2_option2">不同意</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="q2_option1" name="question2" value="1">
-                        <label for="q2_option1">超爛</label>
+                        <label for="q2_option1">非常不同意</label>
                     </div>
                 </div>
                 <div class="detail-answer">
@@ -263,27 +263,27 @@
 
             <!-- 問題3 -->
             <div class="question-section">
-                <h3 class="question-title">3. 再次使用意願如何？</h3>
+                <h3 class="question-title">3. 未來我願意繼續使用</h3>
                 <div class="satisfaction-options">
                     <div class="radio-option">
                         <input type="radio" id="q3_option5" name="question3" value="5">
-                        <label for="q3_option5">超級好</label>
+                        <label for="q3_option5">非常同意</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="q3_option4" name="question3" value="4">
-                        <label for="q3_option4">超好</label>
+                        <label for="q3_option4">同意</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="q3_option3" name="question3" value="3">
-                        <label for="q3_option3">很好</label>
+                        <label for="q3_option3">普通</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="q3_option2" name="question3" value="2">
-                        <label for="q3_option2">爛</label>
+                        <label for="q3_option2">不同意</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="q3_option1" name="question3" value="1">
-                        <label for="q3_option1">超爛</label>
+                        <label for="q3_option1">非常不同意</label>
                     </div>
                 </div>
                 <div class="detail-answer">
@@ -351,16 +351,16 @@
 
             const questions = ['question1', 'question2', 'question3'];
             const questionTitles = {
-                'question1': '整體服務印象',
+                'question1': '整體服務滿意度',
                 'question2': '推薦意願',
-                'question3': '再次使用意願'
+                'question3': '未來使用意願'
             };
             const options = {
-                5: '超級好',
-                4: '超好', 
-                3: '很好',
-                2: '爛',
-                1: '超爛'
+                5: '非常同意',
+                4: '同意', 
+                3: '普通',
+                2: '不同意',
+                1: '非常不同意'
             };
             
             let resultText = '<div style="text-align: left;">';
